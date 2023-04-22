@@ -1,9 +1,32 @@
-version: '3.9'
+docker-compose.yml
+====================
+
+version: '3.8'
+
 services:
-  apache:
-    image: httpd:latest
-    container_name: my-apache-app
+  mysqlsrv:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "Senha123"
+      MYSQL_DATABASE: "testedb"
     ports:
-    - '8081:80'
+      - "3306:3306"
     volumes:
-    - ./website:/user/local/apache2/htdocs
+      - /data/mysql-C:/var/lib/mysql
+    networks:
+      - minha-rede
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - minha-rede
+
+networks: 
+  minha-rede:
+    driver: bridge
+
+
+
+# docker-compose up -d
